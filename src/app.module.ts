@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { FirestoreModule } from './firestore/firestore.module';
 
 @Module({
   imports: [
@@ -12,8 +12,8 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }),
     UserModule,
-    TypeOrmModule.forRoot(),
     AuthModule,
+    FirestoreModule,
   ],
   controllers: [AppController],
   providers: [AppService],

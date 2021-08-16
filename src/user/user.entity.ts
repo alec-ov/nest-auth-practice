@@ -1,20 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Schema } from 'src/firestore/classes/firestore.model';
 import IUser from './interfaces/user.interface';
 
-@Entity()
-export class User implements IUser {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class User implements IUser, Schema {
+  id: string;
 
-  @Column()
   name: string;
 
-  @Column()
   password: string;
 
-  @Column({ unique: true })
   login: string;
 
-  @Column({ default: '' })
-  refresh_token: string;
+  refreshToken?: string;
 }

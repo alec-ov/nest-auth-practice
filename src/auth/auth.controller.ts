@@ -13,9 +13,9 @@ export class AuthController {
     return this.authService.login(credentials);
   }
 
-  @Post('/login-by-token')
-  async loginByRefreshToken(@Body('refresh-token') token: string) {
-    return this.authService.loginByRefreshToken(token);
+  @Post('/refresh-token')
+  async refreshToken(@Body('refresh-token') token: string) {
+    return this.authService.refreshToken(token);
   }
 
   @Post('/register')
@@ -23,7 +23,7 @@ export class AuthController {
     return this.authService.register(user);
   }
 
-  @Get('hidden')
+  @Get('hidden') // just to test validation
   @UseGuards(LoginGuard)
   hidden() {
     return 'this is a private page';

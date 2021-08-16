@@ -25,12 +25,14 @@ export class AuthService {
     }
   }
 
-  async loginByRefreshToken(token: string) {
+  async refreshToken(token: string) {
     try {
       const payload = this.jwtService.verify(token);
       const user = await this.userService.findById(payload.sub);
 
-      if (user.refresh_token !== token) {
+      console.log(user);
+
+      if (user.refreshToken !== token) {
         throw new UnauthorizedException();
       }
 
@@ -63,7 +65,7 @@ export class AuthService {
         sub: user.id,
         name: user.name,
       },
-      { expiresIn: '10m' },
+      { expiresIn: '5m' },
     );
     await this.userService.updateToken(user.id, refreshToken);
     return { accessToken, refreshToken };

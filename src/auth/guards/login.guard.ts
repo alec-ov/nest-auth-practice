@@ -17,7 +17,7 @@ export class LoginGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
-    const token = request.headers.token;
+    const token = request.headers.Authorization.split('Bearer ')[1];
 
     try {
       const payload = this.jwtService.verify(token, {

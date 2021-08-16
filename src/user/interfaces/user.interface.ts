@@ -1,9 +1,9 @@
 export default interface IUser {
-  id: number;
+  id: string;
 
   name: string;
   login: string;
   password: string;
 
-  refresh_token: string;
+  refreshToken?: string;
 }
