@@ -13,7 +13,11 @@ export class UserRepositoty {
   }
 
   async getAll(): Promise<User[]> {
-    return this.userModel.getAll();
+    const results = await this.userModel.getAll();
+    return results.map((user) => {
+      user.refreshToken = '';
+      return user;
+    });
   }
 
   async getByLogin(login: string) {
