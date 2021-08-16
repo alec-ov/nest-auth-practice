@@ -30,8 +30,6 @@ export class AuthService {
       const payload = this.jwtService.verify(token);
       const user = await this.userService.findById(payload.sub);
 
-      console.log(user);
-
       if (user.refreshToken !== token) {
         throw new UnauthorizedException();
       }
