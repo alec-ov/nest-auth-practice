@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'src/firestore/classes/firestore.model';
 import { FirestoreService } from 'src/firestore/firestore.service';
 
-import RegisterUserDto from './dto/user.register.dto';
+import RegisterUserDto from '../auth/dto/auth.register.dto';
 import { User } from './user.entity';
 
 @Injectable()
@@ -16,6 +16,7 @@ export class UserRepositoty {
     const results = await this.userModel.getAll();
     return results.map((user) => {
       user.refreshToken = '';
+      user.password = '';
       return user;
     });
   }
