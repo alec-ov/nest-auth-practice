@@ -2,12 +2,6 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { readFileSync } from 'fs';
-
-// Import firebase-admin
-import * as admin from 'firebase-admin';
-import { ServiceAccount } from 'firebase-admin';
-
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -17,16 +11,9 @@ import { JwtService } from '@nestjs/jwt';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 8080;
-  // Set the config options
-  const adminConfig: ServiceAccount = JSON.parse(
-    readFileSync('./firebase-adminsdk.json').toString(),
-  );
-  // Initialize the firebase admin app
-  admin.initializeApp({
-    credential: admin.credential.cert(adminConfig),
-  });
 
   const app = await NestFactory.create(AppModule);
+
   app.useGlobalPipes(new ValidationPipe({ forbidNonWhitelisted: true }));
   app.useGlobalGuards(
     new LoginGuard(

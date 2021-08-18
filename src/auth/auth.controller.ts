@@ -21,7 +21,7 @@ import { AuthService } from './auth.service';
 import { refreshTokenDto } from './dto/auth.refresh.dto';
 import { LoginGuard } from './guards/login.guard';
 import { AuthTokens } from './classes/auth.tokens';
-import { User } from 'src/user/user.entity';
+import { User } from 'src/user/classes/user.entity';
 import { LoggedUser } from './decorators/user.decorator';
 import { UserService } from 'src/user/user.service';
 import { UserPayload } from 'src/user/interfaces/user.payload.interface';
@@ -101,7 +101,11 @@ export class AuthController {
   @ApiUnauthorizedResponse({
     description: 'User not logged in',
   })
-  async getCurrentUser(@LoggedUser() user: UserPayload): Promise<User> {
-    return this.userService.findById(user.id);
+  async getCurrentUser(@LoggedUser() userData: UserPayload): Promise<User> {
+    const user = await this.userService.findById(userData.id);
+    delete user.password;
+    delete user.refreshToken;
+
+    return user;
   }
 }

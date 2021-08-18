@@ -9,7 +9,6 @@ COPY package* ./
 RUN npm install
 
 COPY . .
-COPY "./firebase-adminsdk.json" ./
 
 RUN npm run build
 
@@ -21,4 +20,4 @@ EXPOSE 8080:8080
 
 # Run the web service on container startup.
 
-CMD [ "npm", "run", "start:prod" ]
+CMD [ "npm", "run", "start" ]

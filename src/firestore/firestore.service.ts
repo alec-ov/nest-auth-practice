@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { firestore } from 'firebase-admin';
 
 import { Model, Schema } from './classes/firestore.model';
+
+// Import firebase-admin
+import { firestore } from 'firebase-admin';
 
 //const db = firestore();
 
 @Injectable()
 export class FirestoreService {
-  private db: firestore.Firestore;
-  constructor() {
-    this.db = firestore();
-  }
+  constructor(private readonly db: firestore.Firestore) {}
+
   createCollection<T extends Schema>(name: string) {
     return new Model<T>(this.db, name);
   }

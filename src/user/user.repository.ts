@@ -3,7 +3,7 @@ import { Model } from 'src/firestore/classes/firestore.model';
 import { FirestoreService } from 'src/firestore/firestore.service';
 
 import RegisterUserDto from '../auth/dto/auth.register.dto';
-import { User } from './user.entity';
+import { User } from './classes/user.entity';
 
 @Injectable()
 export class UserRepositoty {
@@ -30,6 +30,8 @@ export class UserRepositoty {
   }
 
   async addOne(user: RegisterUserDto) {
+    const checkExisting = await this.getByLogin(user.login);
+    if (checkExisting) throw new Error('login taken');
     return this.userModel.addOne(user);
   }
 
